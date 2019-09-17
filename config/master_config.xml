@@ -82,7 +82,7 @@
    <!-- ****** CONFIGURATION FOR FRAGMENTATION ALGORITHMS ****** -->
    <config alg="genie::KNOHadronization">            KNOHadronization.xml            </config>
    <config alg="genie::KNOPythiaHadronization">      KNOPythiaHadronization.xml      </config>
-   <config alg="genie::Pythia6Hadronization">        Pythia6Hadronization.xml        </config>
+   <config alg="genie::PythiaHadronization">         PythiaHadronization.xml         </config>
    <config alg="genie::CharmHadronization">          CharmHadronization.xml          </config>
 
    <!-- ****** CONFIGURATION FOR PARTON DENSITY FUNCTION ALGORITHMS ****** -->
@@ -143,7 +143,6 @@
    <config alg="genie::SmithMonizQELCCPXSec">               SmithMonizQELCCPXSec.xml               </config>
    <config alg="genie::QPMDMDISPXSec">                      QPMDMDISPXSec.xml                      </config>
    <config alg="genie::QPMDISPXSec">                        QPMDISPXSec.xml                        </config>
-   <config alg="genie::KNOTunedQPMDISPXSec">                KNOTunedQPMDISPXSec.xml                </config>
    <config alg="genie::AivazisCharmPXSecLO">                AivazisCharmPXSecLO.xml                </config>
    <config alg="genie::SlowRsclCharmDISPXSecLO">            SlowRsclCharmDISPXSecLO.xml            </config>
    <config alg="genie::KovalenkoQELCharmPXSec">             KovalenkoQELCharmPXSec.xml             </config>
@@ -179,7 +178,7 @@
    <config alg="genie::SpectralFunc1d">              SpectralFunc1d.xml              </config>
    <config alg="genie::SpectralFunc">                SpectralFunc.xml                </config>
    <config alg="genie::SmithMonizUtils">             SmithMonizUtils.xml             </config>
-
+   <config alg="genie::ContactFormalismModel">       ContactFormalismModel.xml       </config>
    <!-- ****** CONFIGURATION FOR MODELS IN MUELOSS UTILITY PACKAGE ****** -->
    <config alg="genie::mueloss::BetheBlochModel">         BetheBlochModel.xml        </config>
    <config alg="genie::mueloss::BezrukovBugaevModel">     BezrukovBugaevModel.xml    </config>

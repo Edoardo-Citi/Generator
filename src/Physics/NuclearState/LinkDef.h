@@ -22,5 +22,7 @@
 #pragma link C++ class genie::EffectiveSF;
 #pragma link C++ class genie::FermiMover;
 #pragma link C++ class genie::PauliBlocker;
+//#pragma link C++ class genie::CorrelatedNuclearModelI;
+#pragma link C++ class genie::ContactFormalismModel;
 
 #endif

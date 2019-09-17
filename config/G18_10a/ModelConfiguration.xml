@@ -31,10 +31,10 @@ STFC, Rutherford Appleton Laboratory
   Currently the same nuclear model is forced for all isotopes.
  -->
 
-  <!--  <param type="alg"  name="NuclearModel">                 genie::EffectiveSF/Default </param> -->
+<!--    <param type="alg"  name="NuclearModel">                 genie::EffectiveSF/Default </param>-->
   <!-- <param type="alg"  name="NuclearModel">                 genie::FGMBodekRitchie/Default </param> -->
-  <param type="alg"  name="NuclearModel">                 genie::LocalFGM/Default </param>
-
+<!--  <param type="alg"  name="NuclearModel">                 genie::LocalFGM/Default </param>-->
+ <param type="alg"   name= "NuclarModel">                 genie::ContactFormalismModel/Default </param>
 
 <!--
   Example of specific model for specific nuclei
@@ -54,7 +54,7 @@ STFC, Rutherford Appleton Laboratory
    - genie::HNIntranuke2018/Default
    - genie::HNIntranuke2018/OsetOff
   -->
-  <param type="bool" name="HadronTransp-Enable"> true </param>
+  <param type="bool" name="HadronTransp-Enable"> false </param>
   <param type="alg"  name="HadronTransp-Model">  genie::HAIntranuke2018/Default  </param>
 
 
@@ -92,9 +92,9 @@ STFC, Rutherford Appleton Laboratory
   <param type="alg" name="XSecModel@genie::EventGenerator/RES-EM">         genie::ReinSehgalRESPXSec/NoPauliBlock       </param>
   -->
 
-  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-CC">         genie::KNOTunedQPMDISPXSec/Default            </param>
-  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-NC">         genie::KNOTunedQPMDISPXSec/Default            </param>
-  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-EM">         genie::KNOTunedQPMDISPXSec/Default            </param>
+  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-CC">         genie::QPMDISPXSec/Default            </param>
+  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-NC">         genie::QPMDISPXSec/Default            </param>
+  <param type="alg" name="XSecModel@genie::EventGenerator/DIS-EM">         genie::QPMDISPXSec/Default            </param>
 
   <!-- Historical Rein-Sehegal model -->
   <!--

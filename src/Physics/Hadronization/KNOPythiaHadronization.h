@@ -22,11 +22,11 @@
 #ifndef _KNO_PYTHIA_HADRONIZATION_H_
 #define _KNO_PYTHIA_HADRONIZATION_H_
 
-#include "Framework/EventGen/EventRecordVisitorI.h"
+#include "Physics/Hadronization/HadronizationModelI.h"
 
 namespace genie {
 
-class KNOPythiaHadronization : protected EventRecordVisitorI {
+class KNOPythiaHadronization : public HadronizationModelI {
 
 public:
 
@@ -34,24 +34,31 @@ public:
   KNOPythiaHadronization(string config);
   virtual ~KNOPythiaHadronization();
 
-  // Implement the EventRecordVisitorI interface
-  void ProcessEventRecord(GHepRecord * event) const;
+  //-- implement the HadronizationModelI interface
+  void           Initialize       (void)                                 const;
+  TClonesArray * Hadronize        (const Interaction* )                  const;
+  double         Weight           (void)                                 const;
+  PDGCodeList *  SelectParticles  (const Interaction*)                   const;
+  TH1D *         MultiplicityProb (const Interaction*, Option_t* opt="") const;
 
-  // Overload the Algorithm::Configure() methods to load private data
-  // members from configuration options
-  virtual void Configure(const Registry & config);
-  virtual void Configure(string config);
+  //-- overload the Algorithm::Configure() methods to load private data
+  //   members from configuration options
+  void Configure(const Registry & config);
+  void Configure(string config);
 
 private:
 
-  void LoadConfig (void);
+ //-- private methods & mutable parameters
 
-  const EventRecordVisitorI * SelectHadronizer(const Interaction *) const;
+  void LoadConfig (void);
+  const HadronizationModelI * SelectHadronizer(const Interaction *) const;
+
+  mutable double fWeight; ///< weight for generated event
 
   //-- configuration
 
-  const EventRecordVisitorI * fKNOHadronizer;    ///< KNO Hadronizer
-  const EventRecordVisitorI * fPythiaHadronizer; ///< PYTHIA Hadronizer
+  const HadronizationModelI * fKNOHadronizer;    ///< KNO Hadronizer
+  const HadronizationModelI * fPythiaHadronizer; ///< PYTHIA Hadronizer
 
   int    fMethod;       ///< KNO -> PYTHIA transition method
   double fWminTrWindow; ///< min W in transition region (pure KNO    < Wmin)
@@ -61,3 +68,4 @@ private:
 }         // genie namespace
 
 #endif    // _KNO_PYTHIA_HADRONIZATION_H_
+

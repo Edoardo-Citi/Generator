@@ -4,7 +4,7 @@
 \class    genie::CharmHadronization
 
 \brief    Provides access to the PYTHIA hadronization models. \n
-          Is a concrete implementation of the EventRecordVisitorI interface.
+          Is a concrete implementation of the HadronizationModelI interface.
 
 \author   Costas Andreopoulos <costas.andreopoulos \at stfc.ac.uk>
           University of Liverpool & STFC Rutherford Appleton Lab
@@ -25,8 +25,7 @@
 
 #include <TGenPhaseSpace.h>
 
-#include "Framework/EventGen/EventRecordVisitorI.h"
-#include "Framework/Interaction/Interaction.h"
+#include "Physics/Hadronization/HadronizationModelI.h"
 
 class TPythia6;
 class TF1;
@@ -36,15 +35,20 @@ namespace genie {
 class Spline;
 class FragmentationFunctionI;
 
-class CharmHadronization : public EventRecordVisitorI {
+class CharmHadronization : public HadronizationModelI {
 
 public:
   CharmHadronization();
   CharmHadronization(string config);
   virtual ~CharmHadronization();
 
-  // Implement the EventRecordVisitorI interface
-  void ProcessEventRecord(GHepRecord * event) const;
+  // Implement the HadronizationModelI interface
+  //
+  void           Initialize       (void)                                    const;
+  TClonesArray * Hadronize        (const Interaction* )                     const;
+  double         Weight           (void)                                    const;
+  PDGCodeList *  SelectParticles  (const Interaction*)                      const;
+  TH1D *         MultiplicityProb (const Interaction*, Option_t* opt = "")  const;
 
   // Overload the Algorithm::Configure() methods to load private data
   // members from configuration options
@@ -52,15 +56,10 @@ public:
   void Configure(const Registry & config);
   void Configure(string config);
 
-
 private:
 
-  void           LoadConfig          (void);
-  void           Initialize          (void)                                    const ;
-  TClonesArray * Hadronize           (const Interaction* )                     const ;
-  int            GenerateCharmHadron (int nupdg, double EvLab)                 const ;
-
-  double         Weight              (void)                                    const ;
+  void LoadConfig          (void);
+  int  GenerateCharmHadron (int nupdg, double EvLab) const;
 
   mutable TGenPhaseSpace fPhaseSpaceGenerator; ///< a phase space generator
 

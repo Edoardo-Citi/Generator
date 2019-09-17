@@ -24,6 +24,8 @@
 
 namespace genie {
 
+class HadronizationModelI;
+
 class DISHadronicSystemGenerator : public HadronicSystemGenerator {
 
 public :
@@ -41,11 +43,12 @@ public :
 
 private:
 
+  void AddFragmentationProducts (GHepRecord * event_rec) const;
   void SimulateFormationZone    (GHepRecord * event_rec) const;
 
   void LoadConfig (void);
 
-  const EventRecordVisitorI * fHadronizationModel;
+  const HadronizationModelI * fHadronizationModel;
 
   bool   fFilterPreFragmEntries;
   double fR0;          ///< param controling nuclear size
