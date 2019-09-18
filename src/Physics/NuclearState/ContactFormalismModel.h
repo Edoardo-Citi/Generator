@@ -56,10 +56,15 @@ public:
   void Configure (string param_set);
 
   // Implement the extra functions in the CorrelatedNuclearModelI interface
-double SecondMomentum(void) const;
- // const TVector3& SecondMomentum3(void) const;
- double SecondRemovalEnergy(double p2, int nucleon_pdgc) const;
- bool HasSecondNucleon (double p1,const Target & target) const;
+  double SecondMomentum(void) const;
+  const TVector3& SecondMomentum3(void) const;
+  double SecondRemovalEnergy(int nucleon_pdgc) const;
+  bool HasSecondNucleon (double p1,const Target & target) const;
+  int Secondpdgc(void) const;
+
+  double*  SCRPartnerMomentum;
+  double*  SCRPartnerPdgc;
+  TVector3* SCRPartner3Momentum;
 
 private:
   TH1D * ProbDistro (const Target & t) const;
@@ -77,7 +82,7 @@ private:
 
   double Returnf1p1h(const Target & target) const;
   void   LoadConfig (void);
-
+  
   mutable map<string, TH1D *> fProbDistroMap;
   double fPMax;
   double fPCutOff;

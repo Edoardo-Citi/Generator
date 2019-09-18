@@ -242,7 +242,7 @@ bool ContactFormalismModel::GenerateNucleon(const Target & target) const
 
   //Using Contact Formalism to predict SF, a recoil nucleon is generated
 
-  if(p>KF){
+    if(HasSecondNucleon(p,target)==true){
     double p2 =0 ; //Momentum of the recoil nucleon
     double e1 =0 ; //Removal energy
     double coin = 0;//Random variable
@@ -257,9 +257,23 @@ bool ContactFormalismModel::GenerateNucleon(const Target & target) const
 
 
     //The extract p2    
-    if(Cpn0<= coin && coin < Cpn1){HighMomentumRecoilNucleon(p,&p2,&e1,KF,2,target);m=PDGLibrary::Instance()->Find(2112)->Mass(); }
-    if(Cpn1<= coin && coin < Cpp){HighMomentumRecoilNucleon(p,&p2,&e1,KF,3,target);m=PDGLibrary::Instance()->Find(2112)->Mass(); }
-    if(Cpp<= coin && coin <= 1){HighMomentumRecoilNucleon(p,&p2,&e1,KF,1,target);  m=PDGLibrary::Instance()->Find(2212)->Mass(); }
+    if(Cpn0<= coin && coin < Cpn1){
+      HighMomentumRecoilNucleon(p,&p2,&e1,KF,2,target);
+      m=PDGLibrary::Instance()->Find(2112)->Mass();
+      SCRPartnerPdgc[0] = 2112;
+    }
+    if(Cpn1<= coin && coin < Cpp){
+      HighMomentumRecoilNucleon(p,&p2,&e1,KF,3,target);
+      m=PDGLibrary::Instance()->Find(2112)->Mass();
+      SCRPartnerPdgc[0] = 2112;
+    }
+    if(Cpp<= coin && coin <= 1){
+      HighMomentumRecoilNucleon(p,&p2,&e1,KF,1,target); 
+      m=PDGLibrary::Instance()->Find(2212)->Mass();
+      SCRPartnerPdgc[0] = 2212;
+    }
+    
+   SCRPartnerMomentum[0] = p2;
 
     //Now I compute the direction of p2
 
@@ -279,9 +293,12 @@ bool ContactFormalismModel::GenerateNucleon(const Target & target) const
     double p2x = p2xp1z*costheta*cosfi - p2yp1z*sinfi + p2zp1z*sintheta*cosfi;
     double p2y = p2xp1z*sintheta*sinfi + p2yp1z*cosfi + p2zp1z*sintheta*sinfi;
     double p2z = -p2xp1z*sinfi + p2zp1z*costheta;
+
+    SCRPartner3Momentum->SetXYZ(p2x,p2y,p2z);
   }
 
   }
+  //
   //-- set removal energy
   //
 
@@ -560,18 +577,32 @@ bool ContactFormalismModel::HasSecondNucleon (double p1,const Target & target) c
 //---------------------------------------------------------------------------
 //Return removal evenrgy of the recoil nucleon
 //---------------------------------------------------------------------------
-double ContactFormalismModel::SecondRemovalEnergy(double p2, int nucleon_pdgc) const
+double ContactFormalismModel::SecondRemovalEnergy(int nucleon_pdgc) const
 {  
   double    m=PDGLibrary::Instance()->Find(nucleon_pdgc)->Mass();
-  return sqrt(p2*p2 + m*m);
+  return sqrt(SCRPartnerMomentum[0] * SCRPartnerMomentum[0] +m*m);
 
 }
 //---------------------------------------------------------------------------
-//Useless function for now, should compute the second momentum
+//Return Second momentum
 //--------------------------------------------------------------------------
 double ContactFormalismModel::SecondMomentum(void) const
 {
-  return 0;
+  return SCRPartnerMomentum[0];
+}
+//--------------------------------------------------------------------------
+//Return srecoil nucleon species
+//--------------------------------------------------------------------------
+int ContactFormalismModel::Secondpdgc(void) const
+{
+  return SCRPartnerPdgc[0];
+}
+//--------------------------------------------------------------------------
+//Return 3 Vector for the recoil nucleon momentum
+//-------------------------------------------------------------------------
+const TVector3& ContactFormalismModel::SecondMomentum3(void) const
+{
+  return SCRPartner3Momentum[0];
 }
 //____________________________________________________________________________
 // Returns the binding energy for a given nucleus.
